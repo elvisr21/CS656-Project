@@ -2,6 +2,7 @@ package com.cs656.project;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText C_Password;
     private Button C_Login_button;
     private TextView C_Attemps;
+    private Button C_GoToRegister;
 
     //validators
     private String Username = "Admin@admin.com";
@@ -30,12 +32,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //assigns components to variables
-        C_Email = findViewById(R.id.Register_Email);
+        C_Email = findViewById(R.id.Login_Email);
         C_Password = findViewById(R.id.Login_Password);
         C_Login_button = findViewById(R.id.Login_Button);
         C_Attemps = findViewById(R.id.Login_Attemps);
+        C_GoToRegister = findViewById(R.id.Login_Go_To_Register);
 
-        //set onclick on Login button
+        //set onclick event  on Login button
         C_Login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
                     if(!isValid){
                         counter--;
                         Toast.makeText(MainActivity.this,"Incorrect credentials", Toast.LENGTH_SHORT).show();
+                        C_Attemps.setText("No. of tries left: " + counter);
                         if (counter == 0){
                             C_Login_button.setEnabled(false);
                         }
@@ -60,6 +64,15 @@ public class MainActivity extends AppCompatActivity {
                         //add code to go to new activity
                     }
                 }
+            }
+        });
+        //set onclick event on go to register button
+        C_GoToRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,Register.class);
+                startActivity(intent);
+
             }
         });
     }
