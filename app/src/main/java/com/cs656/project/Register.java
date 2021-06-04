@@ -51,7 +51,7 @@ public class Register extends AppCompatActivity {
                     Toast.makeText(Register.this,"Please enter all the details correctly", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    if(!validate(input_email,input_password)){
+                    if(!RegisterUser(input_email,input_password)){
                         Toast.makeText(Register.this,"User Already Exist", Toast.LENGTH_SHORT).show();
                     }
                     else{
@@ -63,7 +63,7 @@ public class Register extends AppCompatActivity {
             }
         });
     }
-    private boolean validate(String name, String password){
+    private boolean RegisterUser(String name, String password){
         //add code here, send request and get data back
 
         return true;
