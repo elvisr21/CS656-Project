@@ -1,4 +1,0 @@
-com/example/cs656/BuildConfig.java
- com.example.cs656.BuildConfig
-com/example/cs656/MainActivity.java
- com.example.cs656.MainActivity
