@@ -19,13 +19,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView C_Attemps;
     private Button C_GoToRegister;
 
-    //validators
-    private String Username = "Admin@admin.com";
-    private String Password = "12345678";
-
     //flags
-    boolean isValid = false;
     int counter = 5;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,8 +45,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this,"Please enter all the details correctly", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    isValid = validate(input_email,input_password);
-                    if(!isValid){
+                    if(!validate(input_email,input_password)){
                         counter--;
                         Toast.makeText(MainActivity.this,"Incorrect credentials", Toast.LENGTH_SHORT).show();
                         C_Attemps.setText("No. of tries left: " + counter);
@@ -61,7 +56,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                     else{
                         Toast.makeText(MainActivity.this,"Login successful", Toast.LENGTH_SHORT).show();
-                        //add code to go to new activity
+                        Intent intent = new Intent(MainActivity.this,MessagePage.class);
+                        startActivity(intent);
                     }
                 }
             }
@@ -77,9 +73,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     private boolean validate(String name, String password){
-        if (name.equals(this.Username) && password.equals(this.Password)){
-            return true;
-        }
-        return false;
+        //add code here, send request and get data back
+
+        return true;
     }
 }
