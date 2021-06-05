@@ -1,5 +1,6 @@
 package com.cs656.project;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,6 +10,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+
 public class Register extends AppCompatActivity {
 
     //component variables
@@ -17,6 +23,9 @@ public class Register extends AppCompatActivity {
     private EditText C_Username;
     private Button C_Register_button;
     private Button C_GoToLogin;
+
+    //firebase Auth
+    FirebaseAuth fAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +38,9 @@ public class Register extends AppCompatActivity {
         C_Register_button = findViewById(R.id.Register_Button);
         C_Username = findViewById(R.id.Register_Username);
         C_GoToLogin = findViewById(R.id.Register_Go_To_Login);
+
+        //Initializing  Firebase Autho instance
+        fAuth = FirebaseAuth.getInstance();
 
         // setting up go to Login event handler
         C_GoToLogin.setOnClickListener(new View.OnClickListener() {
@@ -62,10 +74,22 @@ public class Register extends AppCompatActivity {
                 }
             }
         });
+        System.out.println(fAuth.getCurrentUser());
     }
-    private boolean RegisterUser(String name, String password){
-        //add code here, send request and get data back
+    private boolean RegisterUser(String email, String password){
+        fAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull @org.jetbrains.annotations.NotNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(Register.this,"User Created",Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(Register.this,MessagePage.class));
+                }
+                else{
+                    Toast.makeText(Register.this,"Error: " +task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
-        return true;
+        return false;
     }
 }

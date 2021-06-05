@@ -1,6 +1,9 @@
 package com.cs656.project;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +12,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,8 +27,14 @@ public class MainActivity extends AppCompatActivity {
     private TextView C_Attemps;
     private Button C_GoToRegister;
 
+
     //flags
     int counter = 5;
+
+    //Firebase autho
+    FirebaseAuth fAuth;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,34 +48,15 @@ public class MainActivity extends AppCompatActivity {
         C_Attemps = findViewById(R.id.Login_Attemps);
         C_GoToRegister = findViewById(R.id.Login_Go_To_Register);
 
+        //Initializing  Firebase Autho instance
+        fAuth = FirebaseAuth.getInstance();
+
+        if (fAuth.getCurrentUser() != null){
+            startActivity(new Intent(MainActivity.this,MessagePage.class));
+            finish();
+        }
         //set onclick event  on Login button
-        C_Login_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String input_email = C_Email.getText().toString();
-                String input_password = C_Password.getText().toString();
-
-                if (input_email.isEmpty() || input_password.isEmpty()){
-                    Toast.makeText(MainActivity.this,"Please enter all the details correctly", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    if(!validate(input_email,input_password)){
-                        counter--;
-                        Toast.makeText(MainActivity.this,"Incorrect credentials", Toast.LENGTH_SHORT).show();
-                        C_Attemps.setText("No. of tries left: " + counter);
-                        if (counter == 0){
-                            C_Login_button.setEnabled(false);
-                        }
-
-                    }
-                    else{
-                        Toast.makeText(MainActivity.this,"Login successful", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(MainActivity.this,MessagePage.class);
-                        startActivity(intent);
-                    }
-                }
-            }
-        });
+        C_Login_button.setOnClickListener(new LoginOnClick());
         //set onclick event on go to register button
         C_GoToRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,9 +67,47 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    private boolean validate(String name, String password){
-        //add code here, send request and get data back
+    //Login click handler
+    class LoginOnClick  implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            String input_email = C_Email.getText().toString().trim();
+            String input_password = C_Password.getText().toString().trim();
 
-        return true;
+            if (input_email.isEmpty()) {
+                C_Email.setError("Email is required!!");
+                return;
+            }
+
+            if (input_password.isEmpty()) {
+                C_Password.setError("Password is required!!");
+                return;
+            }
+            if (counter > 0) {
+                Signin(input_email, input_password);
+            }
+        }
+    }
+
+    private void Signin(String email, String password){
+        //add code here, send request and get data back
+        fAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull @org.jetbrains.annotations.NotNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(MainActivity.this,"User Created",Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(MainActivity.this,MessagePage.class));
+                }
+                else{
+                    counter--;
+                    C_Attemps.setText("No. of tries left: " + counter);
+                    if (counter == 0){
+                        C_Login_button.setEnabled(false);
+                    }
+                    Toast.makeText(MainActivity.this,"Error: " +task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        });
     }
 }

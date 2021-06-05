@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Register"
-    android:background="@drawable/login_background"
 
     >
 
@@ -82,7 +81,7 @@
         android:id="@+id/Register_Go_To_Login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Back To Login"
+        android:text="Already have an Account? Login Here"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
