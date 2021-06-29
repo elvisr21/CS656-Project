@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull @org.jetbrains.annotations.NotNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    Toast.makeText(MainActivity.this,"User Created",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this,"User has been Logged in",Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(MainActivity.this,MessagePage.class));
                 }
                 else{
