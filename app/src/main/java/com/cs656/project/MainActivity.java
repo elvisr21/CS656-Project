@@ -2,7 +2,6 @@ package com.cs656.project;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 
 import android.content.Intent;
@@ -31,9 +30,8 @@ public class MainActivity extends AppCompatActivity {
     //flags
     int counter = 5;
 
-    //Firebase autho
+    //Firebase variables
     FirebaseAuth fAuth;
-
 
 
     @Override
@@ -48,9 +46,8 @@ public class MainActivity extends AppCompatActivity {
         C_Attemps = findViewById(R.id.Login_Attemps);
         C_GoToRegister = findViewById(R.id.Login_Go_To_Register);
 
-        //Initializing  Firebase Autho instance
+        //Initializing  Firebase variables
         fAuth = FirebaseAuth.getInstance();
-
         if (fAuth.getCurrentUser() != null){
             startActivity(new Intent(MainActivity.this,MessagePage.class));
             finish();
