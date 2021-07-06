@@ -89,7 +89,7 @@ public class Register extends AppCompatActivity {
                     user.put("groupchats", Arrays.asList());
                     user.put("friends",Arrays.asList());
                     db.collection("users").document(fAuth.getUid()).set(user);
-                    startActivity(new Intent(Register.this,MessagePage.class));
+                    startActivity(new Intent(Register.this, LoggedIn.class));
                 }
                 else{
                     Toast.makeText(Register.this,"Error: " +task.getException().getMessage(),Toast.LENGTH_SHORT).show();

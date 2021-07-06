@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         //Initializing  Firebase variables
         fAuth = FirebaseAuth.getInstance();
         if (fAuth.getCurrentUser() != null){
-            startActivity(new Intent(MainActivity.this,MessagePage.class));
+            startActivity(new Intent(MainActivity.this, LoggedIn.class));
             finish();
         }
         //set onclick event  on Login button
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
             public void onComplete(@NonNull @org.jetbrains.annotations.NotNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     Toast.makeText(MainActivity.this,"User has been Logged in",Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(MainActivity.this,MessagePage.class));
+                    startActivity(new Intent(MainActivity.this, LoggedIn.class));
                 }
                 else{
                     counter--;

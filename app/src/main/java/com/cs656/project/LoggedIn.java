@@ -12,14 +12,12 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import org.jetbrains.annotations.NotNull;
 
-public class MessagePage extends AppCompatActivity {
+public class LoggedIn extends AppCompatActivity {
     //components
     private Button Log_Out_Button;
 
@@ -61,12 +59,12 @@ public class MessagePage extends AppCompatActivity {
                                     username =  document.getString("username");
 
                                 } else {
-                                    Toast.makeText(MessagePage.this, "User doesn't exist in database", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(LoggedIn.this, "User doesn't exist in database", Toast.LENGTH_SHORT).show();
                                 }
                             } else {
-                                Toast.makeText(MessagePage.this, "Error getting use data", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoggedIn.this, "Error getting use data", Toast.LENGTH_SHORT).show();
                             }
-                            Toast.makeText(MessagePage.this, "Here", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoggedIn.this, "Here", Toast.LENGTH_SHORT).show();
 
                         }
                     });
@@ -76,7 +74,7 @@ public class MessagePage extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             fAuth.signOut();
-            startActivity(new Intent(MessagePage.this,MainActivity.class));
+            startActivity(new Intent(LoggedIn.this,MainActivity.class));
             finish();
         }
     }
